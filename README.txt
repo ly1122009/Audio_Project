@@ -3,12 +3,12 @@
 		2. Module hardware use in the project				
 		- UART			-> print the log while running			
 		- BUTTON		-> play/stop the music, skip/pause the song			
-		- LED			-> show the status of playing song. status program			
-		- AUDIO			-> output the audio			
-		- USB OTG		-> read the song			
-		- Motion sensor	-> change the volume			
-		3. Use the IDE KEIL C and the periperal standard library				
-		4. The project use the RTOS to implement							
+		- LED			-> show the status of playing the song. status program			
+		- AUDIO			-> Output the audio			
+		- USB OTG		-> Read the song			
+		- Motion sensor	-> Change the volume			
+		3. Use the IDE KEIL C and the peripheral standard library				
+		4. The project using the RTOS to implement							
 					
 	User story				
 		1. At the startup 2s:				
@@ -44,7 +44,7 @@
 		TuanLDM:
 			- Setup USART
 			- Responsible for coding following requirement based on module which was Setup by colleagues
-		LyNC (Team lead): 
+		LyNC (Team lead): (it's me) 
 			- Setup Standard Library for STM32F411E
 			- Setup GPIO Led, Button
 			- Setup SPI Motion Sensor
