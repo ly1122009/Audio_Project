@@ -9,8 +9,8 @@
 **
 ** ###################################################################
 */
-#include "stm32f4xx.h"                  // Device header
 #include "ButtonControl.h"
+
 
 #define LED_ON 1
 #define LED_OFF 0
@@ -29,51 +29,31 @@ void Button_init(void)
 	/* Enable RCC for EXTI */
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
 	
-	/* Init GPIO input for PA4 */
-	GPIO_InitTypeDef initGPIO_4;
-	initGPIO_4.GPIO_Mode = GPIO_Mode_IN;  
-	initGPIO_4.GPIO_Pin = GPIO_Pin_4;
-	initGPIO_4.GPIO_PuPd = GPIO_PuPd_NOPULL;
-	GPIO_Init(GPIOA, &initGPIO_4);									
+	/* Init GPIO input for PA0 */
+	GPIO_InitTypeDef initGPIOx;
+	initGPIOx.GPIO_Mode = GPIO_Mode_IN;  
+	initGPIOx.GPIO_Pin = GPIO_Pin_0;
+	initGPIOx.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOA, &initGPIOx);									
 	
 	/* Connect pin PA4 to EXTI4 */
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource4);	
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource0);	
 	
-	/* Init EXTI for PA4 */
-	EXTI_InitTypeDef initEXTI_4;
-	initEXTI_4.EXTI_Line = EXTI_Line4;
-	initEXTI_4.EXTI_Mode = EXTI_Mode_Interrupt;
-	initEXTI_4.EXTI_Trigger = EXTI_Trigger_Rising;
-	initEXTI_4.EXTI_LineCmd = ENABLE;
-	EXTI_Init(&initEXTI_4);
+	/* Init EXTI for PA0 */
+	EXTI_InitTypeDef initEXTIx;
+	initEXTIx.EXTI_Line = EXTI_Line0;
+	initEXTIx.EXTI_Mode = EXTI_Mode_Interrupt;
+	initEXTIx.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+	initEXTIx.EXTI_LineCmd = ENABLE;
+	EXTI_Init(&initEXTIx);
 	
-	/* Init NVIC for EXTI of PA4*/
-	NVIC_InitTypeDef initNVIC_4;
-	initNVIC_4.NVIC_IRQChannel = EXTI4_IRQn;
-	initNVIC_4.NVIC_IRQChannelPreemptionPriority = 0;
-	initNVIC_4.NVIC_IRQChannelSubPriority = 0;
-	initNVIC_4.NVIC_IRQChannelCmd = ENABLE;
-	NVIC_Init(&initNVIC_4);
+	/* Init NVIC for EXTI of PA0*/
+	NVIC_InitTypeDef initNVICx;
+	initNVICx.NVIC_IRQChannel = EXTI0_IRQn;
+	initNVICx.NVIC_IRQChannelPreemptionPriority = 0;
+	initNVICx.NVIC_IRQChannelSubPriority = 0;
+	initNVICx.NVIC_IRQChannelCmd = ENABLE;
+	NVIC_Init(&initNVICx);
 }
 
-void EXTI4_IRQHandler(void)
-{
-	/* Check and clear flag interrupt EXTI4 */
-	if (EXTI_GetITStatus(EXTI_Line4) != RESET)
-	{
-		EXTI_ClearITPendingBit(EXTI_Line4);
-		if (ledState == LED_OFF)
-		{
-			TURN_ON_LED;
-			ledState = LED_ON;
-		}
-		else if (ledState == LED_ON)
-		{
-			TURN_OFF_LED;
-			ledState = LED_OFF;
-		}
-		else
-		{
-		}
-	}
-}
+

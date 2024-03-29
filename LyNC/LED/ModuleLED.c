@@ -9,15 +9,14 @@
 **
 ** ###################################################################
 */
-#include "stm32f4xx.h"                  // Device header
-#include "DelayLED.h"
+
 #include "ModuleLED.h"
+
 
 #define DELAY_200MS 200
 #define DELAY_1000MS 1000
 #define DELAY_500MS 500
-#define HAVE_A_SONG 1
-#define NO_ANY_SONG 0
+
 
 #define ALL_LED (GPIO_Pin_15 | GPIO_Pin_14 | GPIO_Pin_13 | GPIO_Pin_12)
 #define TURN_ON_LED GPIO_SetBits(GPIOD, ALL_LED)
@@ -58,9 +57,9 @@ LED_Output LED_startup(void)
 {
 	/* Blink all LED every 0.2s */
 	TURN_ON_LED;
-	Delay_ms(DELAY_200MS);
+	USER_DelayMs(DELAY_200MS);
 	TURN_OFF_LED;
-	Delay_ms(DELAY_200MS);
+	USER_DelayMs(DELAY_200MS);
 	
 	/* ---------------------------------------------------------------------------------------------------------------- */
 	// Add soucre code in startup state of another module here 
@@ -73,57 +72,8 @@ LED_Output LED_startup(void)
 /**
  * @brief  Operation of LED at Running state 
  */
-void LED_running(void)
-{
-	/* ---------------------------------------------------------------------------------------------------------------- */
-	// Add soucre code in running state to check play any song
-	volatile int Check_AnySong = NO_ANY_SONG;
-	
-	/* ---------------------------------------------------------------------------------------------------------------- */
-	if (Check_AnySong == NO_ANY_SONG)
-	{
-		while (Check_AnySong == NO_ANY_SONG)
-		{
-			LED_blink_1000ms();
-		}
-	}
-	else if (Check_AnySong == HAVE_A_SONG)
-	{
-		while (Check_AnySong == HAVE_A_SONG)
-		{
-			LED_blink_500ms();
-		}
-	}
-	else
-	{
-	}
-}
 
 
-/* Private functions */
-void LED_blink_200ms(void)
-{
-		TURN_ON_LED;
-		Delay_ms(DELAY_200MS);
-		TURN_OFF_LED;
-		Delay_ms(DELAY_200MS);
-}
-
-void LED_blink_500ms(void)
-{
-		TURN_ON_LED;
-		Delay_ms(DELAY_500MS);
-		TURN_OFF_LED;
-		Delay_ms(DELAY_500MS);
-}
-
-void LED_blink_1000ms(void)
-{
-		TURN_ON_LED;
-		Delay_ms(DELAY_1000MS);
-		TURN_OFF_LED;
-		Delay_ms(DELAY_1000MS);	
-}
 
 
 

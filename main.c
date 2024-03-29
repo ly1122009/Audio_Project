@@ -6,8 +6,6 @@ USB_OTG_CORE_HANDLE		USB_OTG_Core;
 USBH_HOST				      USB_Host;
 RCC_ClocksTypeDef		  RCC_Clocks;
 volatile int			    enum_done = 0;
-volatile uint32_t i = 0;
-volatile uint32_t j = 0;
 
 TaskHandle_t TASK_0 = NULL;
 TaskHandle_t TASK_1 = NULL;
@@ -33,10 +31,7 @@ int main(){
 	Button_init();
 	
 	/* Init I3G42450D (Motion sensor)*/
-	if (I3G4250D_Init() == I3G4250D_Result_Error)
-	{
-		while(1);
-	}
+	I3G4250D_Init();
 	
 	/* Task of Audio Project */
 	xTaskCreate(Task0_Init, "TASK_0", configMINIMAL_STACK_SIZE, NULL, 4, NULL);
@@ -58,9 +53,6 @@ static void Task0_Init(void *pvParameters){
 	InitializeAudio(Audio44100HzSettings);
 	SetAudioVolume(soundVolume);
 	
-	/* Send ""send massenge to PC “Start state” (UART) */
-	USART_sendDataString(USART_StringDataSend_aa);
-	
 	/* Link led during 2s */
 	while (VariableMode.IntialCount_u8 < INITIAL_COUNT){
 		GPIO_SetBits(GPIOD, GPIO_Pin_15);
@@ -69,6 +61,9 @@ static void Task0_Init(void *pvParameters){
 		vTaskDelay(DELAY_200MS);
 		VariableMode.IntialCount_u8++;
 	}
+	
+	/* Send ""send massenge to PC “Start state” (UART) */
+	USART_sendDataString(USART_StringDataSend_aa);
 	
 	/* End Task 0 */
 	vTaskDelete(TASK_0);
@@ -103,26 +98,21 @@ static void Task2_SenSor(void *pvParameters){
 /* Task USB */
 void Task3_USB(void *pvParameters){
 	while(1){
-		/* Test button -> get data from usb and command by button and motion sensor */
+		/* Get button state and process data from usb */
 		if (VariableMode.StartStop_bit != 0){
-			GPIO_SetBits(GPIOD, GPIO_Pin_13);
-			vTaskDelay(500);
-			GPIO_ResetBits(GPIOD, GPIO_Pin_13);
-			vTaskDelay(500);
+			/*  */
+			if (VariableMode.Pause_bit == 0){
+				/* Read data from USB */
+			}
 		}
-		if (VariableMode.Skip_u8 != 0){
-			GPIO_SetBits(GPIOD, GPIO_Pin_14);
-			vTaskDelay(500);
-			GPIO_ResetBits(GPIOD, GPIO_Pin_14);
-			vTaskDelay(500);
-		}
-		if (VariableMode.Pause_bit != 0){
-			GPIO_SetBits(GPIOD, GPIO_Pin_12);
-			vTaskDelay(500);
-			GPIO_ResetBits(GPIOD, GPIO_Pin_12);
-			vTaskDelay(500);
+		if (VariableMode.Skip_bit != 0){
+			/* Read data from USB a interval skip */
+			
+			/* Performed requirement and then Reset state of the skip command bit */
+			VariableMode.Skip_bit &= 0; 
 		}
 		
+		/* Get value from motion sensor to process requirements */
 		if ((USER_MotionSensor.ChangeValueX_2bit != 0) ||
 				(USER_MotionSensor.ChangeValueY_2bit != 0) ||
 				(USER_MotionSensor.ChangeValueZ_2bit != 0)){
@@ -153,7 +143,7 @@ void Task5_Audio(void *pvParameters){
 		if (VariableMode.StartStop_bit != 0){
 			if (VariableMode.Pause_bit == 0){
 				/* Run Music */
-
+				
 			}
 		}
 		vTaskDelay(1);
@@ -163,24 +153,11 @@ void Task5_Audio(void *pvParameters){
 /* Task Alarm */
 void Task6_Alarm(void *pvParameters){
 	while(1){
-		
 		/*  Speak “Peak” when button is pressed */
-		if (timeButton < 3000){	//press button
-			/* "Peak" */
-			for(i = 0; i < sizeof(beep_sound); i++){	//Length of "Beep" sound is 512 byte 
-				OutputAudioSample(beep_sound[i]);
-				if ((timeButton == 3000) && (i > 200)){	//i>200 ensure to generate "Beep" sound
-					break;
-				}
-			}
-		}
+		USER_SoundButton();
 		
 		/* (USB is not plug) && (button is pressed)  ->  the audio speak “the USB doesn’t plug” */
-		if ((VariableMode.RejectUSB_bit != 0) && (timeButton < 3000)){
-			for(i = 0; i < sizeof(error_sound); i++){
-				OutputAudioSample(error_sound[i]);
-			}
-		}
+		USER_SoundError();
 	
 		vTaskDelay(1);
 	}

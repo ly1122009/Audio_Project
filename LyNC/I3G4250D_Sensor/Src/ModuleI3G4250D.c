@@ -10,7 +10,9 @@
 ** ###################################################################
 */
 #include "ModuleI3G4250D.h"
-#include "stm32f4xx.h"                  // Device header
+
+/* Output Sensor */
+I3G4250D_Output_uint8_t I3G4250D_Data;
 
 static GPIO_InitTypeDef GPIOInit;
 static SPI_InitTypeDef SPIinit;
@@ -30,7 +32,7 @@ I3G4250D_Result_t I3G4250D_Init(void)
 	I3G4250D_HIGH_CS;
 	
 	I3G4250D_LOW_CS;
-	SPI_Tx(I3G4250D_CTRL_REG1_ADDR, 0x0F);
+	SPI_Tx(I3G4250D_CTRL_REG1_ADDR, 0xFF);
 	
 	/* Read data WHO AM I */
 	result = SPI_Rx(0x8F);

@@ -9,8 +9,9 @@
 **
 ** ###################################################################
 */
-#include "stm32f4xx.h"                  // Device header
+
 #include "DelayLED.h"
+
 
 
 #define SYS_CLOCK						100000000
@@ -20,19 +21,6 @@
 #define TIM_PRESCALER_84MHZ (8400 - 1)
 #define TIM_PERIOD_MS 			(1000 - 1)
 
-/* Variable using count cycle TIM2 */
-volatile int msTick = VALUE_INIT_0;
-
-/* Interrupt for TIM2 Fucntion */
-void TIM2_IRQHandler(void)
-{
-	/* Check interrupt flag TIM2, if it's RESET value -> Clear it */
-	if (TIM_GetITStatus(TIM2, TIM_IT_Update) != RESET)
-	{
-		TIM_ClearITPendingBit(TIM2, TIM_IT_Update);
-		msTick++;
-	}
-}
 
 /* 
 * Init Timer for Delay_ms function 
@@ -55,7 +43,7 @@ void Init_timerDelay(void)
 	NVIC_InitTypeDef initNVIC_Timer;
 	initNVIC_Timer.NVIC_IRQChannel = TIM2_IRQn;
 	initNVIC_Timer.NVIC_IRQChannelCmd = ENABLE;
-	initNVIC_Timer.NVIC_IRQChannelPreemptionPriority = 0;
+	initNVIC_Timer.NVIC_IRQChannelPreemptionPriority = 7;
 	initNVIC_Timer.NVIC_IRQChannelSubPriority = 0;
 	NVIC_Init(&initNVIC_Timer);
 	
@@ -65,12 +53,6 @@ void Init_timerDelay(void)
 	TIM_Cmd(TIM2, ENABLE);
 }
 
-/* Delay_ms Function */
-void Delay_ms(int p_Time_ms)
-{
-	volatile int startTick = msTick;
-	/* (msTick - startTick) is the value count of timer */
-	while ( (msTick - startTick) < p_Time_ms ){}
-}
+
 
 

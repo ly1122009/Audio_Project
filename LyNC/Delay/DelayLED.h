@@ -12,8 +12,7 @@
 #ifndef _DELAYLED_H_
 #define _DELAYLED_H_
 
-/* Interrupt for TIM2 Fucntion */
-void TIM2_IRQHandler(void);
+#include "stm32f4xx.h"                  // Device header
 
 /* 
 * Init Timer for Delay_ms function 
@@ -21,9 +20,6 @@ void TIM2_IRQHandler(void);
 * This function using TIM2 and using interrupt 
 */
 void Init_timerDelay(void);
-
-/* Delay_ms Function */
-void Delay_ms(int p_Time_ms);
 
 #endif
 

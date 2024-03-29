@@ -18,10 +18,11 @@ typedef struct{
 }MotionSensor_t;
 extern MotionSensor_t USER_MotionSensor;
 
-/* Delay_ms Function */
-void USER_DelayMs(int p_Time_ms);
+/* Function */
+void USER_DelayMs(int p_Time_ms);	
 void USER_GetStateButton(void);
 void USER_GetMotionSensor(void);
-void USER_SoundError(const volatile uint8_t *ptr);
+void USER_SoundButton(void);
+void USER_SoundError(void);
 
 #endif

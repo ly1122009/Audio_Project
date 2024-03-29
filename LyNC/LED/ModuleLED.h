@@ -12,6 +12,11 @@
 #ifndef _MODULELED_H_
 #define _MODULELED_H_
 
+#include "stm32f4xx.h"                  // Device header
+#include "DelayLED.h"
+#include "user_function.h"
+#include "user_interrupt.h"
+
 /* LED output Result enumerations */
 typedef enum {
 	LED_Output_OK,   // Everything OK

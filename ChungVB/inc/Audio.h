@@ -1,3 +1,8 @@
+/*
+ * Filename: Audio.h
+ * Content: Audio library
+ */
+
 #ifndef __AUDIO_H__
 #define __AUDIO_H__
 
@@ -25,8 +30,6 @@ typedef void AudioCallbackFunction(void *context,int buffer);
 #define Audio22050HzSettings 429,4,9,1
 #define Audio44100HzSettings 271,2,6,0
 #define AudioVGAHSyncSettings 419,2,13,0 // 31475.3606. Actual VGA timer is 31472.4616.
-
-//more define
 #define Audio64000HzSettings 400,2,4,1
 #define Audio88200HzSettings 271,3,3,1
 #define Audio128000HzSettings 400,2,2,1
@@ -62,4 +65,4 @@ void StopAudio(void);
 void ProvideAudioBuffer(void *samples,int numsamples);
 bool ProvideAudioBufferWithoutBlocking(void *samples,int numsamples);
 
-#endif
+#endif /*_AUDIO_H_*/

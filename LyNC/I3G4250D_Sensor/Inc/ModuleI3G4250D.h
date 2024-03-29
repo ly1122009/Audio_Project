@@ -39,12 +39,14 @@
 #define I3G4250D_FIFO_CTRL_REG_ADDR     0x2E  /* Fifo control Register */
 #define I3G4250D_FIFO_SRC_REG_ADDR      0x2F  /* Fifo src Register */
 
+
 /* I3G4250D main output structure */
 typedef struct {
-	uint8_t X; /*!< X axis rotation */
-	uint8_t Y; /*!< Y axis rotation */
-	uint8_t Z; /*!< Z axis rotation */
+	int8_t X; /*!< X axis rotation */
+	int8_t Y; /*!< Y axis rotation */
+	int8_t Z; /*!< Z axis rotation */
 } I3G4250D_Output_uint8_t;
+extern I3G4250D_Output_uint8_t I3G4250D_Data;
 
 /* I3G4250D Result enumerations */
 typedef enum {
