@@ -145,8 +145,9 @@ This project uses [Original Versioning](https://vedder.se/2012/12/stm32f4-discov
 
 ## Further Reading
 
-. https://github.com/mfauzi/STM32F4/tree/master/STM32F4%20Standard%20Peripheral%20Library
-. https://www.st.com/resource/en/application_note/an3997-audio-playback-and-recording-using-the-stm32f4discovery-stmicroelectronics.pdf
+https://github.com/mfauzi/STM32F4/tree/master/STM32F4%20Standard%20Peripheral%20Library
+
+https://www.st.com/resource/en/application_note/an3997-audio-playback-and-recording-using-the-stm32f4discovery-stmicroelectronics.pdf
 
 **[Back to top](#table-of-contents)**
 
