@@ -57,7 +57,7 @@ Use STM32F411VET6 discovery board to play music from USB
 
 LyNC: (It's me) 
 
-	- Setup Standard Library for STM32F411E
+	- Setup Standard Library for STM32F411VET6
 
 	- Setup GPIO LEDs, Button
 
@@ -115,7 +115,7 @@ TuanLDM:
 
 1. ST-Link v2 Programmer
 2. Keil C v5
-3. KIT STM32F411E DISCOVERY
+3. KIT STM32F411VET6 DISCOVERY
 4. USB-host cable
 5. Loudspeaker
 
@@ -145,8 +145,8 @@ This project uses [Original Versioning](https://vedder.se/2012/12/stm32f4-discov
 
 ## Further Reading
 
-https://github.com/mfauzi/STM32F4/tree/master/STM32F4%20Standard%20Peripheral%20Library
-https://www.st.com/resource/en/application_note/an3997-audio-playback-and-recording-using-the-stm32f4discovery-stmicroelectronics.pdf
+. https://github.com/mfauzi/STM32F4/tree/master/STM32F4%20Standard%20Peripheral%20Library
+. https://www.st.com/resource/en/application_note/an3997-audio-playback-and-recording-using-the-stm32f4discovery-stmicroelectronics.pdf
 
 **[Back to top](#table-of-contents)**
 
